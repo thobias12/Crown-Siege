@@ -1,29 +1,38 @@
-# Crown Siege — Blackkeep
+# Tavern Tactics
 
-A browser-playable dark medieval fantasy siege prototype inspired by the incremental recruit/defend loop of **Crown Siege**, rebuilt with an original grim-fantasy presentation and magic combat.
+A browser-playable tabletop roguelike RTS prototype built from scratch with original code and procedural 3D art.
+
+The design goal is to reproduce the **gameplay structure and feel** of Tabletop Tavern as closely as practical in a web prototype without copying proprietary source code, art, audio, names, or other shipped assets.
 
 ## Play
 
 GitHub Pages: https://thobias12.github.io/Crown-Siege/
 
-## Current prototype
+## Current playable loop
 
-- Side-view auto-battler siege loop
-- Grave Guard, Night Ranger and Hexbinder recruitment
-- Gold, mana, crowns and escalating enemy waves
-- Three targeted spells: Soul Bolt, Black Frost and Hell Nova
-- Keep and income upgrades
-- Dread Lord boss every fifth wave
-- Responsive canvas battlefield and dark medieval UI
-- No external assets or runtime dependencies
+- Candlelit 3D tavern and physical war-table presentation
+- Commander selection with three different army bonuses
+- Branching tabletop campaign map
+- Battle, elite, recruit, treasure and inn encounters
+- Three-choice regiment recruitment
+- Run-wide equipment rewards
+- Pre-battle formation deployment
+- Real-time regiment combat
+- Left-click regiment selection and right-click orders
+- Infantry, polearms, ranged units, heavy infantry and cavalry
+- Regiment health, armor, attack, speed and range
+- Boss encounter at the end of the first campaign
+- Gold and renown progression
+- Drag camera rotation and wheel zoom
 
 ## Controls
 
-- **1 / 2 / 3** — recruit units
-- **Q / W / E** — select spell
-- **Click battlefield** — cast selected spell
-- **Space** — pause
+- **Left click** — select a regiment or campaign node
+- **Right click** — deploy / issue movement orders
+- **Left drag** — rotate camera
+- **Mouse wheel** — zoom
+- Use the bottom HUD for formation, hold-position and battle-speed controls
 
-## Direction
+## Implementation
 
-Keep the satisfying incremental siege structure while evolving it into a darker medieval fantasy game: oppressive castle environments, cursed armies, blood-moon atmosphere, necromancy, elemental magic, elite enemies, bosses, kingdom upgrades and persistent meta-progression.
+The prototype is a static GitHub Pages game using Three.js from jsDelivr. Character models, terrain, tavern props, miniatures, UI and campaign content are generated specifically for this project rather than copied from Tabletop Tavern.
