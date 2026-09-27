@@ -522,7 +522,7 @@ function damageRegiment(target,damage,attacker){
   target.unit.hp-=damage;
   spawnHit(target.group.position,attacker&&attacker.unit.ranged?0xe9d89d:0xc66b59);
   if(target.unit.hp<=0){target.unit.hp=0;target.dead=true;target.ring.material.opacity=0}
-  if(!target.enemy&&target.source){target.source.hp=target.unit.hp}
+  if(!target.enemy&&target.source){target.source.hp=target.unit.hp;renderRoster()}
   if(state.selectedId===target.id)showUnitPanel(target.unit);
 }
 
@@ -672,7 +672,6 @@ function updateBattleCounts(){
   const a=regiments.filter(r=>!r.enemy&&!r.dead).reduce((n,r)=>n+Math.ceil(r.unit.count*clamp(r.unit.hp/r.unit.maxHp,0,1)),0);
   const e=regiments.filter(r=>r.enemy&&!r.dead).reduce((n,r)=>n+Math.ceil(r.unit.count*clamp(r.unit.hp/r.unit.maxHp,0,1)),0);
   $('#allyCount').textContent=a;$('#enemyCount').textContent=e;
-  renderRoster();
 }
 
 function showBanner(text){
