@@ -2,62 +2,102 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#09090b">
-  <title>Crown Siege — Blackkeep</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0a1014">
+  <title>Tavern Tactics</title>
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-<main class="shell">
-  <header class="topbar">
-    <div class="brand"><div class="sigil">♛</div><div><h1>CROWN SIEGE</h1><p>BLACKKEEP</p></div></div>
-    <div class="resources">
-      <div><span>GOLD</span><strong id="gold">0</strong></div>
-      <div><span>MANA</span><strong id="mana">0</strong></div>
-      <div><span>CROWNS</span><strong id="crowns">0</strong></div>
-      <div><span>WAVE</span><strong id="wave">1</strong></div>
+<div id="app">
+  <canvas id="scene"></canvas>
+  <div class="vignette"></div>
+
+  <header class="top-hud">
+    <div class="crest"><span>⚔</span><div><b>TAVERN TACTICS</b><small>A ROGUELIKE WAR TABLE</small></div></div>
+    <div class="run-track">
+      <span class="act-label">ACT I · THE BORDERLANDS</span>
+      <div id="runPips" class="pips"></div>
     </div>
-    <button id="pauseBtn" class="icon-btn" aria-label="Pause">Ⅱ</button>
+    <div class="resources">
+      <div><small>COIN</small><b id="gold">120</b></div>
+      <div><small>RENOWN</small><b id="renown">0</b></div>
+    </div>
   </header>
 
-  <section class="battle-wrap">
-    <canvas id="game" width="1600" height="900"></canvas>
-    <div class="vignette"></div>
-    <div id="announcement" class="announcement"></div>
-    <div class="objective"><span id="phaseLabel">THE DEAD APPROACH</span><div class="bar"><i id="waveBar"></i></div></div>
+  <aside id="unitPanel" class="unit-panel panel hidden">
+    <div class="eyebrow">SELECTED REGIMENT</div>
+    <h2 id="unitName">Company</h2>
+    <div class="type-line" id="unitType">Infantry</div>
+    <div class="hp"><i id="unitHp"></i></div>
+    <div class="stats">
+      <span>Attack<b id="statAttack">0</b></span>
+      <span>Armor<b id="statArmor">0</b></span>
+      <span>Speed<b id="statSpeed">0</b></span>
+      <span>Range<b id="statRange">0</b></span>
+    </div>
+    <p id="unitTrait">No trait.</p>
+  </aside>
+
+  <aside id="battleInfo" class="battle-info panel hidden">
+    <div class="eyebrow">BATTLEFIELD</div>
+    <div class="battle-score"><span>YOUR FORCE <b id="allyCount">0</b></span><span>ENEMY <b id="enemyCount">0</b></span></div>
+    <div class="help">Left-click a regiment to select it. Right-click the battlefield to move/attack. Drag to rotate the camera. Wheel to zoom.</div>
+  </aside>
+
+  <button id="startBattle" class="start-battle hidden"><span>⚔</span> START BATTLE <span>›</span></button>
+
+  <div id="campaignHint" class="campaign-hint panel hidden">
+    <div class="eyebrow">CAMPAIGN MAP</div>
+    <b>Choose your next encounter</b>
+    <small>Battle, recruit, treasure, or recover at an inn.</small>
+  </div>
+
+  <section id="roster" class="roster panel">
+    <div class="roster-title"><b>WAR BAND</b><small id="rosterSub">Choose a road on the campaign map</small></div>
+    <div id="cards" class="cards"></div>
+    <div class="slots">
+      <button id="formationBtn" title="Tighten formation">▰</button>
+      <button id="holdBtn" title="Hold position">⌖</button>
+      <button id="speedBtn" title="Battle speed">1×</button>
+    </div>
   </section>
 
-  <section class="hud">
-    <aside class="keep-panel panel">
-      <h2>BLACKKEEP</h2>
-      <div class="keep-stat"><span>Keep</span><strong id="keepHpText">1000 / 1000</strong></div>
-      <div class="bar keep"><i id="keepHpBar"></i></div>
-      <div class="keep-stat"><span>Ward</span><strong id="wardText">0%</strong></div>
-      <button id="upgradeKeep" class="wide"><span>Fortify Keep</span><em id="keepCost">120g</em></button>
-      <button id="upgradeIncome" class="wide"><span>Tithe the Realm</span><em id="incomeCost">140g</em></button>
-    </aside>
+  <div id="banner" class="banner"></div>
 
-    <section class="recruit panel">
-      <div class="section-title"><span>RECRUIT</span><small>Army fights automatically</small></div>
-      <div class="cards">
-        <button class="card" data-unit="guard"><div class="unit-icon guard-icon">♜</div><div><b>Grave Guard</b><small>Armored frontline</small></div><em>35g</em><kbd>1</kbd></button>
-        <button class="card" data-unit="ranger"><div class="unit-icon ranger-icon">➶</div><div><b>Night Ranger</b><small>Long-range damage</small></div><em>55g</em><kbd>2</kbd></button>
-        <button class="card" data-unit="mage"><div class="unit-icon mage-icon">✦</div><div><b>Hexbinder</b><small>Arcane splash</small></div><em>85g</em><kbd>3</kbd></button>
+  <section id="modal" class="modal on">
+    <div id="modalCard" class="modal-card">
+      <div class="eyebrow">WELCOME, COMMANDER</div>
+      <h1>TAVERN <span>TACTICS</span></h1>
+      <p class="lead">Build a war band in the candlelight, choose a route across the tabletop campaign, recruit new regiments, and command miniature armies in real time.</p>
+      <div class="hero-grid">
+        <button class="hero-card" data-hero="marshal"><div class="hero-art marshal"></div><b>THE MARSHAL</b><small>Human · disciplined formations</small><p>Infantry gain armor while holding position.</p></button>
+        <button class="hero-card" data-hero="warden"><div class="hero-art warden"></div><b>THE WARDEN</b><small>Ranger · mobile ranged force</small><p>Archers move faster and fire farther.</p></button>
+        <button class="hero-card" data-hero="thane"><div class="hero-art thane"></div><b>THE THANE</b><small>Dwarf · stubborn front line</small><p>All regiments gain maximum health.</p></button>
       </div>
-    </section>
-
-    <aside class="magic panel">
-      <div class="section-title"><span>DARK ARTS</span><small>Click battlefield to cast</small></div>
-      <div class="spells">
-        <button class="spell selected" data-spell="bolt"><b>✧</b><span>Soul Bolt</span><em>20m</em></button>
-        <button class="spell" data-spell="frost"><b>❄</b><span>Black Frost</span><em>35m</em></button>
-        <button class="spell" data-spell="nova"><b>✹</b><span>Hell Nova</span><em>60m</em></button>
-      </div>
-    </aside>
+      <button id="beginRun" class="primary" disabled>CHOOSE A COMMANDER</button>
+    </div>
   </section>
 
-  <footer><span>Survive the endless siege. Bosses arrive every fifth wave.</span><span>1–3 recruit · Q/W/E select magic · Space pause</span></footer>
-</main>
-<script src="./game.js"></script>
+  <section id="choiceModal" class="modal">
+    <div class="choice-shell">
+      <div class="choice-heading"><div class="eyebrow" id="choiceKicker">RECRUIT UNITS</div><h2 id="choiceTitle">Choose one</h2><p id="choiceText">Add one regiment to your war band.</p></div>
+      <div id="choiceCards" class="choice-cards"></div>
+      <button id="skipChoice" class="secondary">Skip</button>
+    </div>
+  </section>
+
+  <section id="victory" class="modal">
+    <div class="victory-card">
+      <div class="crossed">⚔</div><div class="eyebrow">VICTORY</div>
+      <h2>Enemy Host Broken</h2>
+      <p>The surviving companies regroup around the war table.</p>
+      <div class="reward-row"><span>Campaign progress</span><b id="victoryReward">+45 coin</b></div>
+      <button id="continueBtn" class="primary">COLLECT REWARD</button>
+    </div>
+  </section>
+
+  <footer class="footer"><span id="modeLabel">Tavern campaign</span><span>Prototype uses original code and procedural art.</span></footer>
+</div>
+<script type="module" src="./game.js"></script>
 </body>
 </html>
