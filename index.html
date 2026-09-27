@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#09090b">
+  <title>Crown Siege — Blackkeep</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<main class="shell">
+  <header class="topbar">
+    <div class="brand"><div class="sigil">♛</div><div><h1>CROWN SIEGE</h1><p>BLACKKEEP</p></div></div>
+    <div class="resources">
+      <div><span>GOLD</span><strong id="gold">0</strong></div>
+      <div><span>MANA</span><strong id="mana">0</strong></div>
+      <div><span>CROWNS</span><strong id="crowns">0</strong></div>
+      <div><span>WAVE</span><strong id="wave">1</strong></div>
+    </div>
+    <button id="pauseBtn" class="icon-btn" aria-label="Pause">Ⅱ</button>
+  </header>
+
+  <section class="battle-wrap">
+    <canvas id="game" width="1600" height="900"></canvas>
+    <div class="vignette"></div>
+    <div id="announcement" class="announcement"></div>
+    <div class="objective"><span id="phaseLabel">THE DEAD APPROACH</span><div class="bar"><i id="waveBar"></i></div></div>
+  </section>
+
+  <section class="hud">
+    <aside class="keep-panel panel">
+      <h2>BLACKKEEP</h2>
+      <div class="keep-stat"><span>Keep</span><strong id="keepHpText">1000 / 1000</strong></div>
+      <div class="bar keep"><i id="keepHpBar"></i></div>
+      <div class="keep-stat"><span>Ward</span><strong id="wardText">0%</strong></div>
+      <button id="upgradeKeep" class="wide"><span>Fortify Keep</span><em id="keepCost">120g</em></button>
+      <button id="upgradeIncome" class="wide"><span>Tithe the Realm</span><em id="incomeCost">140g</em></button>
+    </aside>
+
+    <section class="recruit panel">
+      <div class="section-title"><span>RECRUIT</span><small>Army fights automatically</small></div>
+      <div class="cards">
+        <button class="card" data-unit="guard"><div class="unit-icon guard-icon">♜</div><div><b>Grave Guard</b><small>Armored frontline</small></div><em>35g</em><kbd>1</kbd></button>
+        <button class="card" data-unit="ranger"><div class="unit-icon ranger-icon">➶</div><div><b>Night Ranger</b><small>Long-range damage</small></div><em>55g</em><kbd>2</kbd></button>
+        <button class="card" data-unit="mage"><div class="unit-icon mage-icon">✦</div><div><b>Hexbinder</b><small>Arcane splash</small></div><em>85g</em><kbd>3</kbd></button>
+      </div>
+    </section>
+
+    <aside class="magic panel">
+      <div class="section-title"><span>DARK ARTS</span><small>Click battlefield to cast</small></div>
+      <div class="spells">
+        <button class="spell selected" data-spell="bolt"><b>✧</b><span>Soul Bolt</span><em>20m</em></button>
+        <button class="spell" data-spell="frost"><b>❄</b><span>Black Frost</span><em>35m</em></button>
+        <button class="spell" data-spell="nova"><b>✹</b><span>Hell Nova</span><em>60m</em></button>
+      </div>
+    </aside>
+  </section>
+
+  <footer><span>Survive the endless siege. Bosses arrive every fifth wave.</span><span>1–3 recruit · Q/W/E select magic · Space pause</span></footer>
+</main>
+<script src="./game.js"></script>
+</body>
+</html>
