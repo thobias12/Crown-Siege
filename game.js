@@ -390,7 +390,7 @@ function makeSoldier(unit,enemy){
   if(unit.ranged){
     const bow=mesh(new THREE.TorusGeometry(.13,.012,5,12,Math.PI),mat(0x6f4b2b),g);bow.rotation.y=Math.PI/2;bow.position.set(.11,.32,0);
   }else{
-    const shaft=mesh(new THREE.CylinderGeometry(.012,.012,unit.key==='spears'||unit.key==='halberd'?.75:.5,5),weaponMat,g);
+    const shaft=mesh(new THREE.CylinderGeometry(.012,.012,(unit.key==='spears'||unit.key==='halberd' ? .75 : .5),5),weaponMat,g);
     shaft.rotation.z=-.25;shaft.position.set(.12,.3,0);
   }
   if(unit.cavalry){
